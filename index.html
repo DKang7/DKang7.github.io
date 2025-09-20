@@ -16,78 +16,75 @@
     </style>
 </head>
 <body class="antialiased">
-    <!-- Main content container with fluid width -->
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-        
-        <!-- Header Section -->
-        <header class="text-center mb-12">
-            <div class="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white shadow-lg transform transition duration-300 hover:scale-105">
-                <img src="https://raw.githubusercontent.com/DKang7/DKang7.github.io/refs/heads/main/IMG_6531.HEIC" alt="Profile Picture" class="w-full h-full object-cover">
-            </div>
-            <h1 class="text-4xl font-bold text-indigo-700 sm:text-5xl mb-2">Hello, I'm a Web Developer.</h1>
-            <p class="text-lg text-gray-600 sm:text-xl">I build beautiful and functional websites.</p>
-        </header>
-
-        <!-- About Me Section -->
-        <section id="about" class="bg-white p-8 rounded-lg shadow-xl mb-12">
-            <h2 class="text-3xl font-bold text-gray-800 mb-4 text-center">About Me</h2>
-            <p class="text-gray-700 leading-relaxed text-center">
-                I am a passionate web developer with a knack for creating user-friendly digital experiences. I specialize in building responsive, modern websites using the latest web technologies. I love solving problems and turning complex ideas into simple, elegant solutions.
-            </p>
-        </section>
-
-        <!-- Projects Section -->
-        <section id="projects" class="mb-12">
-            <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">My Projects</h2>
-            <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                <!-- Project Card 1 -->
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105">
-                    <img src="https://placehold.co/600x400/3B82F6/ffffff?text=Project+1" alt="Project 1" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-2xl font-semibold text-gray-800 mb-2">Project Title 1</h3>
-                        <p class="text-gray-600">A brief description of the project. Mention the technologies used and what the project does.</p>
-                        <a href="#" class="mt-4 inline-block text-indigo-500 hover:text-indigo-600 font-medium">View Project &rarr;</a>
-                    </div>
-                </div>
-
-                <!-- Project Card 2 -->
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105">
-                    <img src="https://placehold.co/600x400/10B981/ffffff?text=Project+2" alt="Project 2" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-2xl font-semibold text-gray-800 mb-2">Project Title 2</h3>
-                        <p class="text-gray-600">A brief description of the project. Mention the technologies used and what the project does.</p>
-                        <a href="#" class="mt-4 inline-block text-indigo-500 hover:text-indigo-600 font-medium">View Project &rarr;</a>
-                    </div>
-                </div>
-                
-                <!-- Project Card 3 -->
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105">
-                    <img src="https://placehold.co/600x400/EF4444/ffffff?text=Project+3" alt="Project 3" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-2xl font-semibold text-gray-800 mb-2">Project Title 3</h3>
-                        <p class="text-gray-600">A brief description of the project. Mention the technologies used and what the project does.</p>
-                        <a href="#" class="mt-4 inline-block text-indigo-500 hover:text-indigo-600 font-medium">View Project &rarr;</a>
-                    </div>
+    <!-- Two-column layout -->
+    <div class="flex h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Left column: Name & Contact -->
+        <aside class="w-2/5 flex flex-col justify-between pr-8 border-r border-gray-200">
+            <div>
+                <h1 class="text-4xl font-bold text-indigo-700 mb-4">David Kang</h1>
+                <div class="text-lg text-gray-600 mb-8">
+                    <div>B.S. Computer Science</div>
+                    <div>Tufts University, School of Engineering</div>
+                    <div>Class of 2028</div>
                 </div>
             </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="bg-white p-8 rounded-lg shadow-xl text-center">
-            <h2 class="text-3xl font-bold text-gray-800 mb-4">Get in Touch</h2>
-            <p class="text-gray-700 leading-relaxed mb-6">
-                I'm always open to new opportunities and collaborations. Feel free to reach out!
-            </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="mailto:dkang04@tufts.edu" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
-                    Email Me
-                </a>
-                <a href="https://www.linkedin.com/in/david-kang-15b61825b" class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-6 py-3 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
-                    My LinkedIn
-                </a>
+            <div class="mb-8">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Contact</h2>
+                <div class="flex flex-col gap-4">
+                    <a href="mailto:dkang04@tufts.edu" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">Email Me</a>
+                    <a href="https://www.linkedin.com/in/david-kang-15b61825b" class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-6 py-3 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">My LinkedIn</a>
+                </div>
             </div>
-        </section>
-
+        </aside>
+        <!-- Right column: Profile, About, Projects -->
+        <main class="w-3/5 pl-8 overflow-y-auto">
+            <!-- Profile Picture -->
+            <div class="flex justify-center mb-8">
+                <div class="relative w-64 h-40 overflow-hidden border-4 border-white shadow-lg transform transition duration-300 hover:scale-105">
+                    <img src="IMG_6531.HEIC" alt="Profile Picture" class="w-full h-full object-cover">
+                </div>
+            </div>
+            <!-- About Me Section -->
+            <section id="about" class="bg-white p-8 rounded-lg shadow-xl mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">About Me</h2>
+                <p class="text-gray-700 leading-relaxed">
+                    I am a passionate web developer with a knack for creating user-friendly digital experiences. I specialize in building responsive, modern websites using the latest web technologies. I love solving problems and turning complex ideas into simple, elegant solutions.
+                </p>
+            </section>
+            <!-- Projects Section -->
+            <section id="projects" class="mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">My Projects</h2>
+                <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                    <!-- Project Card 1 -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105">
+                        <img src="https://placehold.co/600x400/3B82F6/ffffff?text=Project+1" alt="Project 1" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-semibold text-gray-800 mb-2">Project Title 1</h3>
+                            <p class="text-gray-600">A brief description of the project. Mention the technologies used and what the project does.</p>
+                            <a href="#" class="mt-4 inline-block text-indigo-500 hover:text-indigo-600 font-medium">View Project &rarr;</a>
+                        </div>
+                    </div>
+                    <!-- Project Card 2 -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105">
+                        <img src="https://placehold.co/600x400/10B981/ffffff?text=Project+2" alt="Project 2" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-semibold text-gray-800 mb-2">Project Title 2</h3>
+                            <p class="text-gray-600">A brief description of the project. Mention the technologies used and what the project does.</p>
+                            <a href="#" class="mt-4 inline-block text-indigo-500 hover:text-indigo-600 font-medium">View Project &rarr;</a>
+                        </div>
+                    </div>
+                    <!-- Project Card 3 -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105">
+                        <img src="https://placehold.co/600x400/EF4444/ffffff?text=Project+3" alt="Project 3" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-semibold text-gray-800 mb-2">Project Title 3</h3>
+                            <p class="text-gray-600">A brief description of the project. Mention the technologies used and what the project does.</p>
+                            <a href="#" class="mt-4 inline-block text-indigo-500 hover:text-indigo-600 font-medium">View Project &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
 
 </body>
