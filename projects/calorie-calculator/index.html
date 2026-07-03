@@ -80,7 +80,7 @@
                 formData.append('file', selectedFile);
 
                 try {
-                    const response = await fetch('https://cal-calc-backend.onrender.com', { method: 'POST', body: formData });
+                    const response = await fetch('https://cal-calc-backend.onrender.com/analyze-food', { method: 'POST', body: formData });
                     const data = await response.json();
                     outputBox.textContent = JSON.stringify(data, null, 4);
                 } catch (error) {
