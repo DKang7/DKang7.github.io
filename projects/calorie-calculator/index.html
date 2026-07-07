@@ -101,20 +101,23 @@
                 
                 const data = await response.json();
 
-                if (data.error) {
-                    showAuthError(data.error);
+                // THE FIX: Check if the HTTP response failed OR if our custom error exists
+                if (!response.ok || data.error) {
+                    // Show our error, or FastAPI's default error, or a generic fallback
+                    showAuthError(data.error || data.detail || "Authentication failed.");
+                    return; // Stop the login process immediately
+                } 
+
+                // If we make it here, the server explicitly said SUCCESS
+                if (endpoint === '/login') {
+                    localStorage.setItem('calCalcUser', username);
+                    showApp(username);
                 } else {
-                    if (endpoint === '/login') {
-                        // Save digital badge to browser memory
-                        localStorage.setItem('calCalcUser', username);
-                        showApp(username);
-                    } else {
-                        // Registration success
-                        authMessage.classList.remove('hidden', 'text-red-500');
-                        authMessage.classList.add('text-green-500');
-                        authMessage.textContent = "Account created! You can now log in.";
-                    }
+                    authMessage.classList.remove('hidden', 'text-red-500');
+                    authMessage.classList.add('text-green-500');
+                    authMessage.textContent = "Account created! You can now log in.";
                 }
+                
             } catch (error) {
                 showAuthError("Failed to connect to server.");
             }
