@@ -25,7 +25,7 @@
                 <input type="password" id="password-input" class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Enter password">
             </div>
             
-            <p id="auth-message" class="text-sm text-red-500 font-medium hidden"></p>
+            <p id="auth-message" class="text-sm font-medium hidden"></p>
 
             <div class="flex gap-3 pt-2">
                 <button id="login-btn" class="flex-1 bg-gray-900 text-white font-medium py-2 rounded-xl hover:bg-gray-800 transition">Log In</button>
@@ -43,6 +43,12 @@
             <button id="logout-btn" class="text-sm text-red-500 hover:text-red-700 font-medium">Log Out</button>
         </div>
         
+        <button id="view-history-btn" class="mb-4 w-full bg-gray-100 text-gray-700 font-medium py-2 rounded-xl border border-gray-200 hover:bg-gray-200 transition">
+            View My Past Logs
+        </button>
+        
+        <div id="history-box" class="hidden mb-6 p-4 bg-gray-50 border border-gray-200 rounded-xl max-h-48 overflow-y-auto text-sm text-gray-700"></div>
+
         <div id="drop-zone" class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center cursor-pointer hover:border-gray-400 transition flex flex-col items-center justify-center group">
             <span class="text-gray-400 group-hover:text-gray-600 mb-2 text-3xl">📸</span>
             <p class="text-sm font-medium text-gray-600">Drag & drop your food image here, or <span class="text-blue-600 underline">browse</span></p>
@@ -62,21 +68,18 @@
 
     <script>
         // === CONFIGURATION ===
-        // PASTE YOUR ACTUAL RENDER URL HERE (No trailing slash)
-        const BACKEND_URL = 'https://cal-calc-backend.onrender.com'; 
+        const BACKEND_URL = 'https://cal-calc-backend.onrender.com'; // PASTE YOUR URL (No trailing slash)
         // =====================
 
         // UI Elements
         const authSection = document.getElementById('auth-section');
         const appSection = document.getElementById('app-section');
-        
-        // Auth Elements
         const usernameInput = document.getElementById('username-input');
         const passwordInput = document.getElementById('password-input');
         const authMessage = document.getElementById('auth-message');
         const userGreeting = document.getElementById('user-greeting');
         
-        // --- 1. INITIALIZATION (Check if already logged in) ---
+        // --- 1. INITIALIZATION ---
         const savedUser = localStorage.getItem('calCalcUser');
         if (savedUser) {
             showApp(savedUser);
@@ -101,14 +104,11 @@
                 
                 const data = await response.json();
 
-                // THE FIX: Check if the HTTP response failed OR if our custom error exists
                 if (!response.ok || data.error) {
-                    // Show our error, or FastAPI's default error, or a generic fallback
                     showAuthError(data.error || data.detail || "Authentication failed.");
-                    return; // Stop the login process immediately
+                    return;
                 } 
 
-                // If we make it here, the server explicitly said SUCCESS
                 if (endpoint === '/login') {
                     localStorage.setItem('calCalcUser', username);
                     showApp(username);
@@ -117,7 +117,6 @@
                     authMessage.classList.add('text-green-500');
                     authMessage.textContent = "Account created! You can now log in.";
                 }
-                
             } catch (error) {
                 showAuthError("Failed to connect to server.");
             }
@@ -132,9 +131,9 @@
             passwordInput.value = '';
             authSection.classList.remove('hidden');
             appSection.classList.add('hidden');
+            document.getElementById('history-box').classList.add('hidden');
         });
 
-        // --- 3. UI HELPER FUNCTIONS ---
         function showAuthError(msg) {
             authMessage.classList.remove('hidden', 'text-green-500');
             authMessage.classList.add('text-red-500');
@@ -147,13 +146,43 @@
             userGreeting.textContent = `Logged in as: ${username}`;
         }
 
-        // --- 4. CALCULATOR LOGIC (Unchanged) ---
+        // --- 3. HISTORY DASHBOARD LOGIC ---
+        document.getElementById('view-history-btn').addEventListener('click', async () => {
+            const user = localStorage.getItem('calCalcUser');
+            const historyBox = document.getElementById('history-box');
+            
+            // Toggle visibility
+            historyBox.classList.toggle('hidden');
+            
+            if (!historyBox.classList.contains('hidden')) {
+                historyBox.innerHTML = "Loading logs...";
+                try {
+                    const response = await fetch(`${BACKEND_URL}/my-history?username=${user}`);
+                    const data = await response.json();
+                    
+                    if (data.length === 0) {
+                        historyBox.innerHTML = "No past meals logged yet.";
+                    } else {
+                        // Reverse the data so newest is at the top
+                        historyBox.innerHTML = data.reverse().map(entry => 
+                            `<div class="mb-2 pb-2 border-b border-gray-200 last:border-0">
+                                <span class="font-bold text-gray-900">${entry.total_calories} Calories</span><br>
+                                <span class="text-gray-500">${entry.food_items.join(', ')}</span>
+                            </div>`
+                        ).join('');
+                    }
+                } catch (e) {
+                    historyBox.innerHTML = "Error loading history.";
+                }
+            }
+        });
+
+        // --- 4. CALCULATOR LOGIC ---
         const dropZone = document.getElementById('drop-zone');
         const fileInput = document.getElementById('file-input');
         const uploadBtn = document.getElementById('upload-btn');
         const fileNameDisplay = document.getElementById('file-name');
         const outputBox = document.getElementById('output-box');
-        
         let selectedFile = null;
 
         dropZone.addEventListener('click', () => fileInput.click());
@@ -185,11 +214,21 @@
 
             const formData = new FormData();
             formData.append('file', selectedFile);
+            
+            // NEW: We attach the username to the file payload
+            formData.append('username', localStorage.getItem('calCalcUser')); 
 
             try {
                 const response = await fetch(`${BACKEND_URL}/analyze-food`, { method: 'POST', body: formData });
                 const data = await response.json();
-                outputBox.textContent = JSON.stringify(data, null, 4);
+                
+                if (response.ok) {
+                    outputBox.textContent = JSON.stringify(data, null, 4);
+                    // Automatically hide history if it's open, so they can see the new result
+                    document.getElementById('history-box').classList.add('hidden');
+                } else {
+                    outputBox.textContent = `Error: ${data.detail || data.error}`;
+                }
             } catch (error) {
                 outputBox.textContent = "Error sending data to server.";
             } finally {
